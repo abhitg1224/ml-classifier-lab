@@ -21,7 +21,8 @@ and the target column `Class`. It has no missing values.
 
 Exact duplicate observations are removed before a stratified 80:20 train/test
 split with random seed 42. Identical feature vectors with conflicting labels are
-rejected.
+rejected. Removing 68 duplicates leaves 13,543 unique observations: 10,834
+training rows and 2,709 test rows, with no shared feature vectors.
 
 ## c. Github Repository Link
 
@@ -29,5 +30,15 @@ https://github.com/abhitg1224/ml-classifier-lab
 
 ## d. Models used
 
-Logistic Regression, Decision Tree, KNN, Gaussian Naive Bayes, and Support Vector
-Machine will be compared using Accuracy, AUC, Precision, Recall, F1, and MCC.
+The five classifiers are Logistic Regression, Decision Tree, KNN with five
+neighbors, Gaussian Naive Bayes, and an RBF Support Vector Machine.
+
+Logistic Regression and KNN use standardization fitted only on training data.
+SVM uses sigmoid probability calibration with standardization inside each
+calibration fold. All models use the same three stratified training-only
+validation folds; mean validation macro F1 determines the selected model.
+
+Evaluation uses Accuracy, AUC, Precision, Recall, F1, and MCC. Precision, Recall,
+and F1 are macro-averaged over the seven classes. AUC is macro one-vs-rest ROC AUC
+from class-aligned probabilities and is unavailable if the test data omits a
+class. MCC uses the multiclass definition.
