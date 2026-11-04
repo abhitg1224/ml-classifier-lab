@@ -12,7 +12,7 @@ from sklearn.pipeline import Pipeline
 
 from artifacts import file_digest, load_models
 from data import FEATURES, LABELS, TARGET, parse_csv
-from metrics import evaluate
+from metrics import METRIC_NAMES, comparison_table, evaluate
 from models import MODEL_FILES
 from test_data import sample_data
 
@@ -76,6 +76,67 @@ class WorkflowTests(unittest.TestCase):
                 self.assertEqual(evaluate(model, holdout), expected[name])
                 self.assertEqual(list(model.feature_names_in_), list(FEATURES))
                 self.assertEqual(set(model.classes_), set(LABELS))
+
+    def test_submission_reports_describe_the_same_saved_experiment(self):
+        manifest = json.loads((ROOT / "model" / "manifest.json").read_text())
+        split = json.loads((ROOT / "split.json").read_text())
+        validation = json.loads((ROOT / "cross_validation.json").read_text())
+        results = json.loads((ROOT / "results.json").read_text())
+        holdout = parse_csv((ROOT / "test_data.csv").read_bytes())
+        self.assertEqual(manifest["test_csv_sha256"], file_digest(ROOT / "test_data.csv"))
+        self.assertEqual(manifest["source_sha256"], split["source_sha256"])
+        self.assertEqual(results["holdout_rows"], len(holdout))
+        self.assertEqual(split["test_rows"], len(holdout))
+        self.assertEqual(split["unique_rows"], split["training_rows"] + split["test_rows"])
+        self.assertEqual(split["source_rows"], split["unique_rows"] + split["duplicates_removed"])
+        self.assertEqual(
+            {label: counts["test"] for label, counts in split["class_counts"].items()},
+            holdout[TARGET].value_counts().to_dict(),
+        )
+        self.assertEqual(
+            sum(counts["training"] for counts in split["class_counts"].values()),
+            split["training_rows"],
+        )
+        winner = max(
+            validation["models"],
+            key=lambda name: validation["models"][name]["validation_macro_f1"],
+        )
+        for report in (manifest, validation, results):
+            self.assertEqual(report["selected_model"], winner)
+        self.assertEqual(results["selected_using"], validation["selection_metric"])
+        recorded_table = pd.read_csv(
+            ROOT / "metrics.csv", index_col="Model", float_precision="round_trip",
+        )
+        pd.testing.assert_frame_equal(
+            recorded_table, comparison_table(results["models"]),
+            check_exact=False, rtol=1e-12, atol=1e-15,
+        )
+
+    def test_readme_tables_match_measured_metrics_and_validation_winner(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        results = json.loads((ROOT / "results.json").read_text())
+        self.assertEqual(
+            [line for line in readme.splitlines() if line.startswith("## ")],
+            [
+                "## a. Problem statement", "## b. Dataset description",
+                "## c. Github Repository Link", "## d. Models used",
+            ],
+        )
+        rows = [
+            [cell.strip() for cell in line.strip("|").split("|")]
+            for line in readme.splitlines() if line.startswith("|") and line.endswith("|")
+        ]
+        for name, result in results["models"].items():
+            with self.subTest(model=name):
+                metric_rows = [row for row in rows if len(row) == 7 and row[0] == name]
+                self.assertEqual(
+                    metric_rows,
+                    [[name, *(f'{result["metrics"][metric]:.6f}' for metric in METRIC_NAMES)]],
+                )
+        winner = f'Overall winner: {results["selected_model"]}'
+        observations = [row for row in rows if len(row) == 2 and row[0] in (*MODEL_FILES, winner)]
+        self.assertEqual([row[0] for row in observations], [*MODEL_FILES, winner])
+        self.assertTrue(all(row[1] for row in observations))
 
     def test_manifest_and_any_checksum_fail_before_deserializing(self):
         original = json.loads((ROOT / "model" / "manifest.json").read_text())
