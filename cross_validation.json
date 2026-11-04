@@ -1,0 +1,63 @@
+{
+  "folds": 3,
+  "random_state": 42,
+  "selection_metric": "training-only validation macro F1",
+  "selected_model": "Support Vector Machine",
+  "models": {
+    "Logistic Regression": {
+      "training_accuracy": 0.9262968131370144,
+      "validation_accuracy": 0.9244045740635617,
+      "validation_macro_f1": 0.9365288536587331,
+      "validation_macro_f1_std": 0.0014544255988202177,
+      "fold_macro_f1": [
+        0.9372238376465891,
+        0.934504823959824,
+        0.9378578993697861
+      ]
+    },
+    "Decision Tree": {
+      "training_accuracy": 1.0,
+      "validation_accuracy": 0.8963448555892187,
+      "validation_macro_f1": 0.9114132985801543,
+      "validation_macro_f1_std": 0.0021401387813486956,
+      "fold_macro_f1": [
+        0.9114257184633824,
+        0.9087859867109105,
+        0.91402819056617
+      ]
+    },
+    "KNN": {
+      "training_accuracy": 0.9425419460504427,
+      "validation_accuracy": 0.9208048977535622,
+      "validation_macro_f1": 0.9340414991544645,
+      "validation_macro_f1_std": 0.000996180764980393,
+      "fold_macro_f1": [
+        0.9333469163755337,
+        0.9333273150391798,
+        0.9354502660486803
+      ]
+    },
+    "Naive Bayes": {
+      "training_accuracy": 0.7632915185662834,
+      "validation_accuracy": 0.7617683406358836,
+      "validation_macro_f1": 0.7633977825562154,
+      "validation_macro_f1_std": 0.0007404939155997232,
+      "fold_macro_f1": [
+        0.7639630765866884,
+        0.7623517032565593,
+        0.7638785678253983
+      ]
+    },
+    "Support Vector Machine": {
+      "training_accuracy": 0.9340501821934888,
+      "validation_accuracy": 0.9295732994186686,
+      "validation_macro_f1": 0.9410614887777645,
+      "validation_macro_f1_std": 0.002962503906354103,
+      "fold_macro_f1": [
+        0.9421446885201065,
+        0.9370149419980959,
+        0.9440248358150913
+      ]
+    }
+  }
+}

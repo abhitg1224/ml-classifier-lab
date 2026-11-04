@@ -1,0 +1,64 @@
+{
+  "format_version": 1,
+  "created_utc": "2026-11-04T07:54:25.512215+00:00",
+  "source_url": "https://archive.ics.uci.edu/static/public/602/dry+bean+dataset.zip",
+  "source_sha256": "53bc1eb01fdaf11e42482c52d51c33522784870d584b1f03c651c2d20225d2cc",
+  "test_csv_sha256": "25bf5e51832db2d663aa84d382705ba942b86344117c5279a72287767bc0b54f",
+  "features": [
+    "Area",
+    "Perimeter",
+    "MajorAxisLength",
+    "MinorAxisLength",
+    "AspectRation",
+    "Eccentricity",
+    "ConvexArea",
+    "EquivDiameter",
+    "Extent",
+    "Solidity",
+    "roundness",
+    "Compactness",
+    "ShapeFactor1",
+    "ShapeFactor2",
+    "ShapeFactor3",
+    "ShapeFactor4"
+  ],
+  "labels": [
+    "BARBUNYA",
+    "BOMBAY",
+    "CALI",
+    "DERMASON",
+    "HOROZ",
+    "SEKER",
+    "SIRA"
+  ],
+  "versions": {
+    "joblib": "1.6.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1"
+  },
+  "selected_model": "Support Vector Machine",
+  "models": {
+    "Logistic Regression": {
+      "filename": "logistic_regression.joblib",
+      "sha256": "c30a177c6d12d031b57c6ccb6d1427eaa26d11c67e308311c2b04d62a61fffe7"
+    },
+    "Decision Tree": {
+      "filename": "decision_tree.joblib",
+      "sha256": "79f9390ea6ab35e888dc0812bdfbb4b30ef96d1f0b9dbf0379e2eaa0ddeef0a4"
+    },
+    "KNN": {
+      "filename": "knn.joblib",
+      "sha256": "64bc4f82391aaf26d71f43065d595817cd9f46bc20132a72fa7268b2b85b0286"
+    },
+    "Naive Bayes": {
+      "filename": "naive_bayes.joblib",
+      "sha256": "dbe0d9366d1cd05c2e18e4c2ca384dd6f483960c1f4ecc5963e48ff965a684c0"
+    },
+    "Support Vector Machine": {
+      "filename": "svm.joblib",
+      "sha256": "d8c9d279296cffe05df9735e7ffd96aa1dbf2372ce21c8ea81d64092e6350389"
+    }
+  }
+}

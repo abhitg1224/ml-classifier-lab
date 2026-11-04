@@ -1,0 +1,70 @@
+{
+  "source_rows": 13611,
+  "duplicates_removed": 68,
+  "unique_rows": 13543,
+  "training_rows": 10834,
+  "test_rows": 2709,
+  "features": [
+    "Area",
+    "Perimeter",
+    "MajorAxisLength",
+    "MinorAxisLength",
+    "AspectRation",
+    "Eccentricity",
+    "ConvexArea",
+    "EquivDiameter",
+    "Extent",
+    "Solidity",
+    "roundness",
+    "Compactness",
+    "ShapeFactor1",
+    "ShapeFactor2",
+    "ShapeFactor3",
+    "ShapeFactor4"
+  ],
+  "labels": [
+    "BARBUNYA",
+    "BOMBAY",
+    "CALI",
+    "DERMASON",
+    "HOROZ",
+    "SEKER",
+    "SIRA"
+  ],
+  "random_state": 42,
+  "test_size": 0.2,
+  "feature_overlap": 0,
+  "source_sha256": "53bc1eb01fdaf11e42482c52d51c33522784870d584b1f03c651c2d20225d2cc",
+  "training_sha256": "95c4644a7beadab877f761decd2fe0d7ed9a9ffdc0cc3f7334988f01592d0f68",
+  "test_sha256": "25bf5e51832db2d663aa84d382705ba942b86344117c5279a72287767bc0b54f",
+  "class_counts": {
+    "BARBUNYA": {
+      "training": 1057,
+      "test": 265
+    },
+    "BOMBAY": {
+      "training": 418,
+      "test": 104
+    },
+    "CALI": {
+      "training": 1304,
+      "test": 326
+    },
+    "DERMASON": {
+      "training": 2837,
+      "test": 709
+    },
+    "HOROZ": {
+      "training": 1488,
+      "test": 372
+    },
+    "SEKER": {
+      "training": 1621,
+      "test": 406
+    },
+    "SIRA": {
+      "training": 2109,
+      "test": 527
+    }
+  }
+}
